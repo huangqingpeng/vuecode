@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function MyPromise(fn) {
+        let callbacks = [];
+        this.then = function(success) {
+            callbacks.push(success)
+        }
+
+        function reslove(value) {
+            callbacks.forEach((callback) => {
+                callback(value)
+            })
+        }
+        fn(reslove)
+    }
+
+    let sleep = function(str) {
+        return new MyPromise((reslove, reject) => {
+            setTimeout(() => {
+                reslove(str)
+            })
+
+        })
+    }
+    sleep("2222").then(res => {
+        console.log(res)
+    })
+</script>
+
+</html>
